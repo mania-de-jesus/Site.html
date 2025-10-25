@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual do Cristão</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+        /*Aumento da Cruz da segunda tela*/
+        .section-icon {
+  font-size: 100px; /* aumenta o tamanho da cruz */
+  text-align: center; /* centraliza */
+  margin-bottom: 10px; /* dá um espacinho entre a cruz e o texto */
+  color: #b8860b; /* opcional: muda a cor (dourado bonito) */
+}
+/*Força o Google à aumentar o tamanho da cruz*/
+.section-icon {
+  font-family: "Times New Roman", serif;
+  font-size: 120px;
+  text-align: center;
+  margin-bottom: 10px;
+  background: linear-gradient(to bottom, #ffd700, #b8860b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+            opacity: 0.1;
+            z-index: -2;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 30% 40%, rgba(218, 165, 32, 0.1), transparent 50%),
+                        radial-gradient(circle at 80% 10%, rgba(255, 215, 0, 0.08), transparent 50%),
+                        radial-gradient(circle at 40% 80%, rgba(139, 69, 19, 0.15), transparent 50%);
+            z-index: -1;
+        }
+        .container {
+            background: rgba(245, 245, 245, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 50px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 900px;
+            margin: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(218, 165, 32, 0.3);
+            animation: slideUp 0.8s ease-out;
+            position: relative;
+        }
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(45deg, #DAA520, #8B4513, #C0C0C0);
+            border-radius: 22px;
+            z-index: -1;
+            opacity: 0.2;
+        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .slide { display: none; animation: fadeIn 0.6s ease-in; }
+        .slide.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, #DAA520 0%, #8B4513 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 3em;
+            font-weight: 700;
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+        h2 {
+            font-family: 'Playfair Display', serif;
+            color: #2d2d2d;
+            font-size: 2.5em;
+            font-weight: 600;
+            margin-bottom: 25px;
+            position: relative;
+        }
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px; left: 50%;
+            transform: translateX(-50%);
+            width: 80px; height: 3px;
+            background: linear-gradient(135deg, #DAA520 0%, #8B4513 100%);
+            border-radius: 2px;
+        }
+        h3 { font-family: 'Playfair Display', serif; color: #1a1a1a; font-size: 1.8em; font-weight: 600; margin-bottom: 20px; }
+        p { color: #555; font-size: 1.1em; line-height: 1.7; margin-bottom: 25px; font-weight: 400; }
+        button {
+            background: linear-gradient(135deg, #DAA520 0%, #8B4513 100%);
+            color: white;
+            padding: 18px 35px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 500;
+            cursor: pointer;
+            margin: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(218, 165, 32, 0.4);
+            font-family: 'Inter', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        button:hover::before { left: 100%; }
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(218, 165, 32, 0.5);
+            background: linear-gradient(135deg, #B8860B 0%, #654321 100%);
+        }
+        button:active { transform: translateY(-1px); }
+        .topic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .topic-grid button {
+            padding: 25px 20px;
+            font-size: 1.05em;
+            height: auto;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border-radius: 15px;
+            line-height: 1.4;
+        }
+        .topic-grid button small { font-size: 0.85em; opacity: 0.9; margin-top: 5px; font-weight: 400; }
+        .navigation { margin-top: 40px; padding-top: 30px; border-top: 1px solid rgba(218, 165, 32, 0.3); }
+        .prayer-content {
+            text-align: left;
+            max-width: 700px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(218, 165, 32, 0.08) 0%, rgba(139, 69, 19, 0.08) 100%);
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 4px solid #DAA520;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .prayer-content p { font-size: 1.2em; line-height: 1.8; color: #444; font-style: italic; margin: 0; }
+        .mystery-item {
+            text-align: left;
+            margin: 25px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(218, 165, 32, 0.1) 0%, rgba(139, 69, 19, 0.1) 100%);
+            border-left: 5px solid #DAA520;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        .mystery-item:hover { transform: translateX(5px); box-shadow: 0 5px 20px rgba(218, 165, 32, 0.2); }
+        .mystery-item h4 { color: #2d2d2d; font-size: 1.3em; margin-bottom: 15px; font-family: 'Playfair Display', serif; font-weight: 600; }
+        .mystery-item p { color: #555; font-size: 1.05em; line-height: 1.7; margin-bottom: 10px; }
+        .mystery-item em { color: #8B4513; font-size: 0.95em; display: block; margin-top: 15px; font-style: italic; }
+        .day-info {
+            background: linear-gradient(135deg, rgba(218, 165, 32, 0.2) 0%, rgba(139, 69, 19, 0.2) 100%);
+            padding: 15px 25px;
+            border-radius: 10px;
+            color: #2d2d2d;
+            font-weight: 500;
+            margin-bottom: 30px;
+            display: inline-block;
+        }
+        .commandment-list { text-align: left; margin: 30px 0; }
+        .commandment-list ol { counter-reset: item; padding-left: 0; list-style: none; }
+        .commandment-list li {
+            display: block;
+            margin: 20px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(218, 165, 32, 0.1) 0%, rgba(139, 69, 19, 0.1) 100%);
+            border-left: 5px solid #DAA520;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        .commandment-list li:hover { transform: translateX(5px); box-shadow: 0 5px 20px rgba(218, 165, 32, 0.2); }
+        .commandment-list li:before {
+            content: counter(item);
+            counter-increment: item;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #DAA520 0%, #8B4513 100%);
+            border-radius: 50%;
+            width: 35px; height: 35px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 0.9em;
+            float: left;
+            margin-top: 2px;
+        }
+        .commandment-list li strong { color: #2d2d2d; font-size: 1.1em; }
+        .church-commandments { margin-top: 50px; }
+        .church-commandments .commandment-box {
+            background: linear-gradient(135deg, rgba(218, 165, 32, 0.1) 0%, rgba(139, 69, 19, 0.1) 100%);
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 5px solid #DAA520;
+            text-align: left;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+        .church-commandments .commandment-box:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(218, 165, 32, 0.15); }
+        .church-commandments .commandment-box h4 {
+            color: #2d2d2d;
+            margin: 0 0 15px 0;
+            font-size: 1.3em;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+        .church-commandments .commandment-box p { margin: 0; color: #555; line-height: 1.6; }
+        .hero-icon {
+            font-size: 4em;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #DAA520 0%, #8B4513 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+        }
+        .section-icon { font-size: 2.5em; margin-bottom: 20px; color: #DAA520; display: block; }
+        .support-box {
+            margin: 40px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(218, 165, 32, 0.1) 0%, rgba(139, 69, 19, 0.1) 100%);
+            border-radius: 15px;
+            border: 2px solid #DAA520;
+        }
+        .support-box h3 { margin-bottom: 20px; }
+        .support-box a {
+            display: inline-block;
+            background: linear-gradient(135deg, #DAA520 0%, #8B4513 100%);
+            color: white;
+            padding: 18px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            box-shadow: 0 8px 25px rgba(218, 165, 32, 0.4);
+            transition: all 0.3s ease;
+        }
+        .support-box a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(218, 165, 32, 0.5);
+            background: linear-gradient(135deg, #B8860B 0%, #654321 100%);
+        }
+        @media (max-width: 768px) {
+            .container { padding: 30px 20px; margin: 10px; }
+            h1 { font-size: 2.2em; }
+            h2 { font-size: 2em; }
+            .topic-grid { grid-template-columns: 1fr; gap: 15px; }
+            .topic-grid button { min-height: 60px; padding: 20px 15px; font-size: 1em; }
+            button { padding: 15px 25px; font-size: 1em; }
+            .prayer-content, .commandment-list li, .mystery-item { padding: 20px; }
+        }
+        .pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        .special-section { position: relative; }
+        .special-section::before {
+            content: '';
+            position: absolute;
+            top: -10px; left: -10px; right: -10px; bottom: -10px;
+            background: linear-gradient(45deg, transparent, rgba(218, 165, 32, 0.15), transparent);
+            border-radius: 25px;
+            z-index: -1;
+            opacity: 0;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+        @keyframes glow { from { opacity: 0; } to { opacity: 1; } }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@700&family=Now:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="slide1" class="slide active">
+        <div class="container special-section">
+            <div class="hero-icon">✨</div>
+            <h1>Manual do Cristão</h1>
+            <p>Descubra os fundamentos da vida cristã, orações essenciais e ensinamentos que fortalecem a fé. Este guia ajuda você a viver segundo os valores de Jesus Cristo, encontrando paz, propósito e esperança em cada dia.</p>
+            <button onclick="showSlide('menu')" class="pulse"> Quero viver a vida Cristã</button>
+        </div>
+    </div>
+
+    <div id="menu" class="slide">
+        <div class="container">
+            <div class="section-icon">✝︎</div>
+            <h1>Escolha um Tópico</h1>
+            <div class="topic-grid">
+                <button onclick="showSlide('cristao')">❤️ Como é ser cristão</button>
+                <button onclick="showSlide('oracoes')">🙏 Orações</button>
+                <button onclick="showSlide('comunhao')">🍞 Comunhão</button>
+                <button onclick="showSlide('terco')">📿 Terço</button>
+                <button onclick="showSlide('misterios-menu')">✨ Mistérios</button>
+                <button onclick="showSlide('pecado')">⚖️ Pecado</button>
+                <button onclick="showSlide('mandamentos')">📜 Mandamentos</button>
+                <button onclick="showSlide('santos')">👼 Santos</button>
+                <button onclick="showSlide('apoie')">💛 Nos Apoie Aqui</button>
+            </div>
+            <div class="navigation">
+                <button onclick="showSlide('slide1')">← Voltar ao Início</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="cristao" class="slide">
+        <div class="container">
+            <div class="section-icon">❤️</div>
+            <h1>O Que é Ser Cristão?</h1>
+            <p>Ser cristão é seguir os ensinamentos de Jesus Cristo, amando a Deus e ao próximo com sinceridade. É uma fé que oferece esperança e um relacionamento pessoal e transformador com Deus.</p>
+            <p>A vida cristã é um convite diário para viver com propósito, fé e amor, sendo luz no mundo e sal da terra. É caminhar em comunhão com Cristo, buscando sempre a santidade e a perfeição do amor.</p>
+            <div class="navigation">
+                <button onclick="showSlide('menu')">← Voltar ao Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="oracoes" class="slide">
+        <div class="container">
+            <div class="section-icon">🙏</div>
+            <h1>Orações Essenciais</h1>
+            <p>Escolha uma oração para fortalecer sua fé e comunhão com Deus:</p>
+            <div class="topic-grid">
+                <button onclick="showSlide('pai-nosso')">✝️ Pai Nosso</button>
+                <button onclick="showSlide('ave-maria')">🌹 Ave Maria</button>
+                <button onclick="showSlide('credo')">⛪ Credo</button>
+                <button onclick="showSlide('santo-anjo')">👼 Santo Anjo</button>
+                <button onclick="showSlide('salve-rainha')">👑 Salve Rainha</button>
+            </div>
+            <div class="navigation">
+                <button onclick="showSlide('menu')">← Voltar ao Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="pai-nosso" class="slide">
+        <div class="container">
+            <div class="section-icon">✝️</div>
+            <h2>Pai Nosso</h2>
+            <div class="prayer-content">
+                <p>Pai Nosso, que estais no Céu, Santificado seja o Vosso nome. Venha a nós o Vosso Reino. Seja feita a Vossa vontade, assim na terra como no Céu. O pão nosso de cada dia nos dai hoje. Perdoai-nos as nossas ofensas, assim como nós perdoamos a quem nos tem ofendido. E não nos deixeis cair em tentação, mas livrai-nos do Mal. Amém.</p>
+            </div>
+            <div class="navigation">
+                <button onclick="showSlide('oracoes')">← Voltar às Orações</button>
+                <button onclick="showSlide('menu')">🏠 Menu Principal</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="ave-maria" class="slide">
+        <div class="container">
+            <div class="section-icon">🌹</div>
+            <h2>Ave Maria</h2>
+            <div class="prayer-content">
+                <p>Ave Maria, cheia de graça, o Senhor é convosco, bendita sois vós entre as mulheres e bendito é o fruto do vosso ventre, Jesus. Santa Maria, Mãe de Deus, rogai por nós pecadores, agora e na hora da nossa morte. Amém.</p>
+            </div>
+            <div class="navigation">
+                <button onclick="showSlide('oracoes')">← Voltar às Orações</button>
+                <button onclick="showSlide('menu')">🏠 Menu Principal</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="credo" class="slide">
+        <div class="container">
+            <div class="section-icon">⛪</div>
+            <h2>Creio</h2>
+            <div class="prayer-content">
+                <p>Creio em Deus Pai todo-poderoso, Criador do céu e da terra; e em Jesus Cristo, seu único Filho, nosso Senhor, que foi concebido pelo poder do Espírito Santo; nasceu da Virgem Maria; padeceu sob Pôncio Pilatos, foi crucificado, morto e sepultado; desceu à mansão dos mortos; ressuscitou ao terceiro dia; subiu aos céus; está sentado à direita de Deus Pai todo-poderoso, donde há de vir a julgar os vivos e os mortos; creio no Espírito Santo; na santa Igreja Católica; na comunhão dos santos; na remissão dos pecados; na ressurreição da carne; na vida eterna. Amém.</p>
+            </div>
+            <div class="navigation">
+                <button onclick="showSlide('oracoes')">← Voltar às Orações</button>
+                <button onclick="showSlide('menu')">🏠 Menu Principal</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="santo-anjo" class="slide">
+        <div class="container">
+            <div class="section-icon">👼</div>
+            <h2>Santo Anjo</h2>
+            <div class="prayer-content">
+                <p>Santo Anjo do Senhor, meu zeloso guardador, se a ti me confiou a piedade divina, sempre me rege, me guarda, me governa e me ilumina. Amém.</p>
+            </div>
+            <div class="navigation">
+                <button onclick="showSlide('oracoes')">← Voltar às Orações</button>
+                <button onclick="showSlide('menu')">🏠 Menu Principal</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="salve-rainha" class="slide">
+        <div class="container">
+            <div class="section-icon">👑</div>
+            <h2>Salve Rainha</h2>
+            <div class="prayer-content">
+                <p>Salve, Rainha, mãe de misericórdia, vida, doçura, esperança nossa, salve! A vós bradamos, os degredados filhos de Eva. A vós suspiramos, gemendo e chorando neste vale de lágrimas. Eia, pois, advogada nossa, esses vossos olhos misericordiosos a nós volvei. E depois deste desterro, mostrai-nos Jesus, bendito fruto do vosso ventre, ó clemente, ó piedosa, ó doce sempre Virgem Maria. Amém.</p>
+            </div>
+            <div class="navigation">
+                <button onclick="showSlide('oracoes')">← Voltar às Orações</button>
+                <button onclick="showSlide('menu')">🏠 Menu Principal</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="comunhao" class="slide">
+        <div class="container">
+            <div class="section-icon">🍞</div>
+            <h1>O Que é a Comunhão na Fé Cristã</h1>
+            <p>A comunhão representa o recebimento do Corpo e Sangue de Cristo, gesto sagrado derivado da "Última Ceia".</p>
+            <p>Para comungar é importante estar em estado de graça, guardar jejum eucarístico e acreditar na presença real de Cristo na Eucaristia. É o momento mais sublime da Missa, onde nos unimos intimamente a Jesus.</p>
+            <p>Porém sempre trate a comunhão como um remédio e não como um prêmio.<p>
+            <div class="navigation">
+                <button onclick="showSlide('menu')">← Voltar ao Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="terco" class="slide">
+        <div class="container">
+            <div class="section-icon">📿</div>
+            <h1>Como Rezar o Terço</h1>
+            <p>O terço é uma oração tradicional católica que medita os mistérios da vida de Jesus e Maria através da repetição do Pai Nosso, Ave Maria e Glória ao Pai.</p>
+            <p>É uma forma de oração contemplativa que nos aproxima de Deus através da intercessão de Nossa Senhora. Cada dezena nos convida a meditar sobre os mistérios da fé.</p>  
+            <img src="https://i.ibb.co/GQZptFDF/Ter-o-1.png" alt="Ter-o-1" border="0">
+            <p>Comece o terço pela sua direita.<p>
+            <div class="navigation">
+                <button onclick="showSlide('menu')">← Voltar ao Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="misterios-menu" class="slide">
+        <div class="container">
+            <div class="section-icon">✨</div>
+            <h1>Mistérios do Terço</h1>
+            <p>Escolha qual mistério você deseja meditar:</p>
+            <div class="topic-grid">
+                <button onclick="showSlide('misterios-gozosos')">😊 Mistérios Gozosos<br><small>(2ª feira e sábado)</small></button>
+                <button onclick="showSlide('misterios-luminosos')">💡 Mistérios Luminosos<br><small>(5ª feira)</small></button>
+                <button onclick="showSlide('misterios-dolorosos')">😢 Mistérios Dolorosos<br><small>(3ª feira e 6ª feira)</small></button>
+                <button onclick="showSlide('misterios-gloriosos')">👑 Mistérios Gloriosos<br><small>(4ª feira e domingo)</small></button>
+            </div>
+            <div class="navigation">
+                <button onclick="showSlide('menu')">← Voltar ao Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="misterios-gozosos" class="slide">
+        <div class="container">
+            <div class="section-icon">😊</div>
+            <h1>Mistérios Gozosos</h1>
+            <div class="day-info">2ª feira e sábado</div>
+            <div class="mystery-item">
+                <h4>Primeiro Mistério Gozoso: Anunciação a Maria</h4>
+                <p>«No sexto mês, o anjo Gabriel foi enviado por Deus a uma cidade da Galiléia, chamada Nazaré, a uma virgem desposada com um homem que se chamava José, da casa de Davi e o nome da virgem era Maria» (Lc 1, 26-27).</p>
+                <em>Pai Nosso, 10 Ave Marias (meditando o mistério), Glória ao Pai.</em>
+            </div>
+            <div class="mystery-item">
+                <h4>Segundo Mistério Gozoso: Visitação de Nossa Senhora a sua prima Isabel</h4>
+                <p>«Naqueles dias, Maria se levantou e foi às pressas às montanhas, a uma cidade de Judá. Entrou em casa de Zacarias e saudou Isabel. Ora, apenas Isabel ouviu a saudação de Maria, a criança estremeceu no seu seio; e Isabel ficou cheia do Espírito Santo. E exclamou em alta voz: "Bendita és tu entre as mulheres e bendito é o fruto do teu ventre"» (Lc 1, 39-42).</p>
+                <em>Pai Nosso, 10 Ave Marias (meditando o mistério), Glória ao Pai.</em>
+            </div>
+            <div class="mystery-item">
+                <h4>Terceiro Mistério Gozoso: Nascimento de Jesus</h4>
+                <p>«Naqueles tempos apareceu um decreto de César Augusto, ordenando o recenseamento de toda a terra. Este recenseamento foi feito antes do governo de Quirino, na Síria. Todos iam alistar-se, cada um na sua cidade. Também José subiu da Galiléia, da cidade de Nazaré, à Judéia, à Cidade de Davi, chamada Belém, porque era da casa e família de Davi, para se alistar com a sua esposa Maria, que estava grávida. Estando eles ali, completaram-se os dias dela. E deu à luz seu filho primogênito, e, envolvendo-o em faixas, reclinou-o num presépio; porque não havia lugar para eles na hospedaria» (Lc 2, 1-7).</p>
+                <em>Pai Nosso, 10 Ave Marias (meditando o mistério), Glória ao Pai.</em>
+            </div>
+            <div class="mystery-item">
+                <h4>Quarto Mistério Gozoso: Apresentação de Jesus no Templo</h4>
+                <p>«Completados que foram os oito dias para ser circuncidado o menino, foi-lhe posto o nome de Jesus, como lhe tinha chamado o anjo, antes de ser concebido no seio materno. Concluídos os dias da purificação segundo a Lei de Moisés, levaram-no a Jerusalém para o apresentar ao Senhor» (Lc 2, 21-22).</p>
+                <em>Pai Nosso, 10 Ave Marias (meditando o mistério), Glória ao Pai.</em>
+            </div>
+            <div class="mystery-item">
+                <h4>Quinto Mistério Gozoso: Perda e encontro do Menino Jesus no Templo</h4>
+                <p>«Seus pais iam todos os anos a Jerusalém para a festa da Páscoa. Tendo ele atingido doze anos, subiram a Jerusalém, segundo o costume da festa. Acabados os dias da festa, quando voltavam, ficou o menino Jesus em Jerusalém, sem que os seus pais o percebessem» (Lc 2, 41-43).</p>
+                <em>Pai Nosso, 10 Ave Marias (meditando o mistério), Glória ao Pai.</em>
+            </div>
+            <div class="navigation">
+                <button onclick="showSlide('misterios-menu')">← Voltar aos Mistérios</button>
+                <button onclick="showSlide('menu')">🏠 Menu Principal</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="misterios-luminosos" class="slide">
+        <div class="container">
+            <div class="section-icon">💡</div>
+            <h1>Mistérios Luminosos</h1>
+            <div class="day-info">5ª feira</div>
+            <div class="mystery-item">
+                <h4>Primeiro Mistério Luminoso: Batismo de Jesus no Jordão</h4>
+                <p>«Naqueles dias, veio Jesus de Nazaré da Galiléia e foi batizado por João no Jordão. E logo, ao sair da água, viu os céus abertos e o Espírito, qual pomba, a descer sobre ele. E dos céus veio uma voz: "Tu és o meu Filho amado, em ti me comprazo"» (Mc 1, 9-11).</p>
+                <em>Pai Nosso, 10 Ave Marias (meditando o mistério), Glória ao Pai.</em>
+            </div>
+            <div class="mystery-item">
+                <h4>Segundo Mistério Luminoso: Auto-revelação de Jesus nas Bodas de Caná</h4>
+                <p>«Três dias depois, celebravam-se bodas em Caná da Galiléia, e achava-se ali a mãe de Jesus. Também foram convidados Jesus e os seus discípulos. Como viesse a faltar vinho, a mãe de Jesus disse-lhe: "Eles não têm vinho"» (Jo 2, 1-3).</p>
+                <em>Pai Nosso, 10 Ave Marias (meditando o mistério), Glória ao Pai.</em>
+            </div>
+            <div class="mystery-item">
+                <h4>Terceiro Mistério Luminoso: Anúncio do Reino de Deus</h4>
+                <p>«Depois que João foi preso, Jesus foi para a Galiléia, pregando o Evangelho de Deus e dizendo: "O tempo está cumprido e o Reino de Deus está próximo; fazei penitência e crede no Evangelho"» (Mc 1, 14-15).</p>
+                <em>Pai Nosso, 10 Ave Marias (meditando o mistério), Glória ao Pai.</em>
+            </div>
+            <div class="mystery-item">
+                <h4>Quarto Mistério Luminoso: Transfiguração de Jesus</h4>
+                <p>«Seis dias depois, Jesus tomou consigo Pedro, Tiago e João, e conduziu-os sós, em particular, a um alto monte, e transfigurou-se diante deles. Suas vestes tornaram-se resplandecentes e de uma brancura tal, que nenhum lavadeiro sobre a terra as poderia fazer assim tão brancas» (Mc 9, 2-3).</p>
+                <em>Pai Nosso, 10 Ave Marias (meditando o mistério), Glória ao Pai.</em>
+            </div>
+            <div class="mystery-item">
+                <h4>Quinto Mistério Luminoso: Instituição da Eucaristia</h4>
+                <p>«Enquanto comiam, Jesus tomou o pão e, após pronunciar a bênção, partiu-o e distribuiu-o aos discípulos, dizendo: "Tomai e comei, isto é o meu corpo". Tomou depois o cálice e, tendo dado graças, deu-lho, dizendo: "Bebei dele todos, porque isto é o meu sangue"» (Mt 26, 26-28).</p>
+                <em>Pai Nosso, 10 Ave Marias (meditando o mistério), Glória ao Pai.</em>
+            </div>
+            <div class="navigation">
+                <button onclick="showSlide('misterios-menu')">← Voltar aos Mistérios</button>
+                <button onclick="showSlide('menu')">🏠 Menu Principal</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="misterios-dolorosos" class="slide">
+        <div class="container">
+            <div class="section-icon">😢</div>
+            <h1>Mistérios Dolorosos</h1>
+            <div class="day-info">3ª feira e 6ª feira</div>
+            <div class="mystery-item">
+                <h4>Primeiro Mistério Doloroso: Agonia de Jesus no Horto</h4>
+                <p>«Então Jesus foi com eles a um lugar chamado Getsêmani e disse a seus discípulos: "Assentai-vos aqui, enquanto eu vou ali orar". E, tomando consigo Pedro e os dois filhos de Zebedeu, começou a entristecer-se e a angustiar-se» (Mt 26, 36-37).</p>
+                <em>Pai Nosso, 10 Ave Marias (meditando o mistério), Glória ao Pai.</em>
+            </div>
+            <div class="mystery-item">
+                <h4>Segundo Mistério Doloroso: Flagelação de Jesus</h4>
+                <p>«Então Pilatos mandou açoitar Jesus» (Jo 19, 1).</p>
+                <em>Pai Nosso, 10 Ave Marias (meditando o mistério), Glória ao Pai.</em>
+            </div>
+            <div class="mystery-item">
+                <h4>Terceiro Mistério Doloroso: Coroação de Espinhos</h4>
+                <p>«Os soldados, tendo tecido uma coroa de espinhos, puseram-lha na cabeça, e vestiram-no com um manto de púrpura. Chegavam-se a ele e diziam: "Salve, rei dos judeus!" E davam-lhe bofetadas» (Jo 19, 2-3).</p>
+                <em>Pai Nosso, 10 Ave Marias (meditando o mistério), Glória ao Pai.</em>
+            </div>
+            <div class="mystery-item">
+                <h4>Quarto Mistério Doloroso: Jesus carrega a Cruz</h4>
+                <p>«Tomaram eles, pois, a Jesus. Levando ele mesmo a sua cruz, Jesus saiu para o lugar chamado Calvário, em hebraico Gólgota» (Jo 19, 16-17).</p>
+                <em>Pai Nosso, 10 Ave Marias (meditando o mistério), Glória ao Pai.</em>
+            </div>
+            <div class="mystery-item">
+                <h4>Quinto Mistério Doloroso: Crucificação e Morte de Jesus</h4>
+                <p>«Ali o crucificaram e com ele outros dois, um de cada lado e Jesus no meio. Quando Jesus tomou o vinagre, disse: "Tudo está consumado!" E, inclinando a cabeça, rendeu o espírito» (Jo 19, 18.30).</p>
+                <em>Pai Nosso, 10 Ave Marias (meditando o mistério), Glória ao Pai.</em>
+            </div>
+            <div class="navigation">
+                <button onclick="showSlide('misterios-menu')">← Voltar aos Mistérios</button>
+                <button onclick="showSlide('menu')">🏠 Menu Principal</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="misterios-gloriosos" class="slide">
+        <div class="container">
+            <div class="section-icon">👑</div>
+            <h1>Mistérios Gloriosos</h1>
+            <div class="day-info">4ª feira e domingo</div>
+            <div class="mystery-item">
+                <h4>Primeiro Mistério Glorioso: Ressurreição de Jesus</h4>
+                <p>«Passado o sábado, Maria Madalena, Maria, mãe de Tiago, e Salomé compraram aromas para ir embalsamar Jesus. E, no primeiro dia da semana, foram ao sepulcro muito cedo, ao nascer do sol. Ora, houve um grande terremoto, porque um anjo do Senhor desceu do céu e, chegando-se, removeu a pedra e sentou-se sobre ela» (Mc 16, 1-2; Mt 28, 2).</p>
+                <em>Pai Nosso, 10 Ave Marias (meditando o mistério), Glória ao Pai.</em>
+            </div>
+            <div class="mystery-item">
+                <h4>Segundo Mistério Glorioso: Ascensão de Jesus ao Céu</h4>
+                <p>«O Senhor Jesus, depois de lhes ter falado, foi elevado ao céu e está sentado à direita de Deus» (Mc 16, 19).</p>
+                <em>Pai Nosso, 10 Ave Marias (meditando o mistério), Glória ao Pai.</em>
+            </div>
+            <div class="mystery-item">
+                <h4>Terceiro Mistério Glorioso: Vinda do Espírito Santo sobre os Apóstolos</h4>
+                <p>«Chegando o dia de Pentecostes, estavam todos reunidos no mesmo lugar. De repente, veio do céu um ruído, como se soprasse um vento impetuoso, e encheu toda a casa onde estavam sentados. Apareceram então umas línguas como de fogo, que se repartiram e pousaram sobre cada um deles. Ficaram todos cheios do Espírito Santo» (At 2, 1-4).</p>
+                <em>Pai Nosso, 10 Ave Marias (meditando o mistério), Glória ao Pai.</em>
+            </div>
+            <div class="mystery-item">
+                <h4>Quarto Mistério Glorioso: Assunção de Nossa Senhora ao Céu</h4>
+                <p>«Viu-se em seguida um grande sinal no céu: uma Mulher revestida do sol, a lua debaixo dos seus pés e na cabeça uma coroa de doze estrelas» (Ap 12, 1).</p>
+                <em>Pai Nosso, 10 Ave Marias (meditando o mistério), Glória ao Pai.</em>
+            </div>
+            <div class="mystery-item">
+                <h4>Quinto Mistério Glorioso: Coroação de Nossa Senhora</h4>
+                <p>«Uma grande voz bradou no céu: "Agora estabeleceu-se a salvação, o poder e a realeza do nosso Deus, e a autoridade do seu Cristo"» (Ap 12, 10).</p>
+                <em>Pai Nosso, 10 Ave Marias (meditando o mistério), Glória ao Pai.</em>
+            </div>
+            <div class="navigation">
+                <button onclick="showSlide('misterios-menu')">← Voltar aos Mistérios</button>
+                <button onclick="showSlide('menu')">🏠 Menu Principal</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="pecado" class="slide">
+        <div class="container">
+            <div class="section-icon">⚖️</div>
+            <h1>O Que é Pecado?</h1>
+            <p>Pecado é toda ação, pensamento ou omissão contrária à lei de Deus. É afastar-se do amor divino e escolher o caminho que nos separa de Deus e do bem.</p>
+            <p>Existem pecados veniais (menos graves) e mortais (graves, que rompem nossa comunhão com Deus). O perdão está sempre disponível através do arrependimento sincero e do Sacramento da Reconciliação.</p>
+            <p>A confissão é o caminho de cura e reconciliação que Jesus nos deu. E você pode e deve confesssar quando quiser.</p>
+            <div class="navigation">
+                <button onclick="showSlide('menu')">← Voltar ao Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="mandamentos" class="slide">
+        <div class="container">
+            <div class="section-icon">📜</div>
+            <h1>Os Mandamentos</h1>
+            <p>Os mandamentos são leis divinas que nos guiam para uma vida de amor, justiça e santidade.</p>
+            
+            <h3>Os Dez Mandamentos de Deus</h3>
+            <div class="commandment-list">
+                <ol>
+                    <li><strong>Amar a Deus sobre todas as coisas</strong></li>
+                    <li><strong>Não tomar Seu santo nome em vão</strong></li>
+                    <li><strong>Guardar domingos e festas de guarda</strong></li>
+                    <li><strong>Honrar pai e mãe</strong></li>
+                    <li><strong>Não matar</strong></li>
+                    <li><strong>Não pecar contra a castidade</strong></li>
+                    <li><strong>Não roubar</strong></li>
+                    <li><strong>Não levantar falso testemunho</strong></li>
+                    <li><strong>Não desejar a mulher do próximo</strong></li>
+                    <li><strong>Não cobiçar as coisas alheias</strong></li>
+                </ol>
+            </div>
+
+            <div class="church-commandments">
+                <h3>Os Cinco Mandamentos da Igreja</h3>
+                <div class="commandment-box">
+                    <h4>1. Participar da Missa aos domingos e festas de guarda</h4>
+                    <p>Santificar o dia do Senhor participando da celebração eucarística.</p>
+                </div>
+                <div class="commandment-box">
+                    <h4>2. Confessar-se ao menos uma vez por ano</h4>
+                    <p>Receber o Sacramento da Reconciliação para purificação espiritual.</p>
+                </div>
+                <div class="commandment-box">
+                    <h4>3. Comungar ao menos pela Páscoa da Ressurreição</h4>
+                    <p>Receber a Eucaristia especialmente no tempo pascal.</p>
+                </div>
+                <div class="commandment-box">
+                    <h4>4. Jejuar e abster-se de carne quando manda a Igreja</h4>
+                    <p>Praticar penitência nos dias estabelecidos pela Igreja.</p>
+                </div>
+                <div class="commandment-box">
+                    <h4>5. Ajudar a Igreja em suas necessidades</h4>
+                    <p>Contribuir materialmente para a manutenção e missão da Igreja.</p>
+                </div>
+            </div>
+
+            <div class="navigation">
+                <button onclick="showSlide('menu')">← Voltar ao Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="santos" class="slide">
+        <div class="container">
+            <div class="section-icon">👼</div>
+            <h1>Os Santos</h1>
+            <p>Os santos são exemplos de fé e virtude que viveram segundo os ensinamentos de Cristo. Eles são nossos intercessores no céu, prontos a ajudar-nos em nossa jornada espiritual.</p>
+            <p>Venerar os santos não é adorá-los (adoramos apenas a Deus), mas honrá-los como modelos de vida cristã e pedir sua intercessão junto a Deus. Cada santo tem uma história única de conversão, santidade e amor a Deus.</p>
+            <p>Podemos recorrer aos santos em nossas orações, pedindo que intercedam por nós diante do Pai (pedindo para "rogar por nós"	). Eles são nossos irmãos mais velhos na fé, que já alcançaram a glória eterna.</p>		
+            <div class="navigation">
+                <button onclick="showSlide('menu')">← Voltar ao Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="apoie" class="slide">
+        <div class="container">
+            <div class="section-icon">💛</div>
+            <h1>Apoie Este Projeto</h1>
+            <p>Este Manual do Cristão foi criado com amor para ajudar na jornada espiritual de todos. Se este conteúdo foi útil para você, considere fazer uma contribuição para manter e expandir este projeto.</p>
+            <div class="support-box">
+                <h3>Faça sua doação</h3>
+                <p>Sua contribuição nos ajuda a continuar compartilhando a fé e os ensinamentos cristãos.</p>
+               <img src="https://i.ibb.co/svXrhnLw/QR-Code-do-Pix.png" alt="Imagem do Pix" border="0">
+                <p>Chave pix: (14) 98817-9321<p>  
+                <p>Acesse também nosso canal no YouTube.<p>              
+                <a href="https://youtube.com/@maniadejesus?si=1t4POGbQv8n1y1BF" target="_blank">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" 
+       alt="YouTube" 
+       width="120">
+</a>
+            </div>
+            <p style="margin-top: 30px;">Que Deus abençoe sua generosidade!</p>
+            <div class="navigation">
+                <button onclick="showSlide('menu')">← Voltar ao Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSlide(slideId) {
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach(slide => slide.classList.remove('active'));
+            document.getElementById(slideId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
